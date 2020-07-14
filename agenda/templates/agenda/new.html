@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'agenda/event.css' %}">
+<link href="{% static 'agenda/the-datepicker.css' %}" rel="stylesheet" />
+<script src="{% static 'agenda/the-datepicker.js' %}"></script>
+<script src="{% static 'agenda/main.js' %}"></script>
+<h1>
+    New Event
+</h1>
+<form>
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Crear Evento">
+</form>

@@ -4,7 +4,7 @@ name_length = 50
 text_field_length = 50
 digit_length = 10
 
-# Create your models here.
+
 class Event(models.Model):
     name = models.CharField(max_length=name_length, null=False)
     cost = models.DecimalField(max_digits=digit_length, decimal_places=2, null=False)
@@ -13,6 +13,9 @@ class Event(models.Model):
     capacity = models.IntegerField(null=False)
     is_recurrent = models.BooleanField()
     description = models.TextField()
+
+    def remaining(self):
+        return self.capacity - self.registerdetails_set.all().count()
 
 
 class Company(models.Model):
@@ -43,8 +46,4 @@ class RegisterDetails(models.Model):
     phone_number = models.CharField(max_length=text_field_length)
     address = models.CharField(max_length=text_field_length)
     email = models.CharField(max_length=text_field_length)
-
-
-class EventRegistration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    register_details = models.ForeignKey(RegisterDetails, on_delete=models.CASCADE)

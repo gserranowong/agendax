@@ -1,0 +1,14 @@
+
+
+.event_content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.event_content > * {
+    width: 100%;
+}

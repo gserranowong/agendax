@@ -1,0 +1,25 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'agenda/event.css' %}">
+<h1>
+    {{ event.name }}
+</h1>
+<form class="event_content" action={% url 'event-register' event.id %} method="post">
+    {% csrf_token %}
+    <div>
+        <p>
+            {{ event.start_date }}
+        </p>
+        <p>
+            Aforo: <strong>{{ event.remaining }} </strong>/{{ event.capacity }}
+        </p>
+        <table>
+            {{ form.as_table }}
+        </table>
+    </div>
+    <div>
+        <p>
+            {{ event.description }}
+        </p>
+        <input type="submit" value="Agendar">
+    </div>
+</form>
