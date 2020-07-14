@@ -1,4 +1,5 @@
 from django.db import models
+from django.core import validators
 
 name_length = 50
 text_field_length = 50
@@ -7,12 +8,13 @@ digit_length = 10
 
 class Event(models.Model):
     name = models.CharField(max_length=name_length, null=False)
-    cost = models.DecimalField(max_digits=digit_length, decimal_places=2, null=False)
+    cost = models.DecimalField(max_digits=digit_length, decimal_places=2, null=False,
+                               validators=[validators.MinValueValidator(0)])
     start_date = models.DateTimeField(null=False)
-    end_date = models.DateTimeField(null=True)
-    capacity = models.IntegerField(null=False)
+    end_date = models.DateTimeField(blank=True)
+    capacity = models.IntegerField(blank=False, validators=[validators.MinValueValidator(1)])
     is_recurrent = models.BooleanField()
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def remaining(self):
         return self.capacity - self.registerdetails_set.all().count()

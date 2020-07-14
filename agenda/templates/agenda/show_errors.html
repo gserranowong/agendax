@@ -1,0 +1,26 @@
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <h2 class="alert-heading">
+            Errores:
+        </h2>
+        {% for field in form %}
+            {% if field.errors %}
+                <h4 class="alert-heading">
+                    {{ field.name }}
+                </h4>
+                <ul class="check-list">
+                    {% for error in field.errors %}
+                        <li>
+                            {{ error|escape }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

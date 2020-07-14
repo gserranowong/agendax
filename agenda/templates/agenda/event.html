@@ -1,25 +1,38 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'agenda/event.css' %}">
-<h1>
-    {{ event.name }}
-</h1>
-<form class="event_content" action={% url 'event-register' event.id %} method="post">
-    {% csrf_token %}
-    <div>
-        <p>
-            {{ event.start_date }}
-        </p>
-        <p>
-            Aforo: <strong>{{ event.remaining }} </strong>/{{ event.capacity }}
-        </p>
-        <table>
-            {{ form.as_table }}
-        </table>
+{% include "agenda/base.html" %}
+<div class="container">
+    <div class="row">
+        <h1>
+            {{ event.name }}
+        </h1>
     </div>
-    <div>
-        <p>
-            {{ event.description }}
-        </p>
-        <input type="submit" value="Agendar">
-    </div>
-</form>
+    <form class="row" action={% url 'event-register' event.id %} method="post">
+        {% csrf_token %}
+        <div class="container col">
+            <p class="flow-text">
+                {{ event.start_date }}
+            </p>
+            <p class="flow-text">
+                Aforo: <strong>{{ event.remaining }} </strong>/{{ event.capacity }}
+            </p>
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.attrs.id }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <div class="col">
+                {% include "agenda/show_errors.html" with form=form %}
+            </div>
+        </div>
+        <div class="col">
+            <p class="flow-text">
+                {{ event.description }}
+            </p>
+            <button type="submit" class="btn btn-primary" name="action">
+                Agendar
+            </button>
+        </div>
+    </form>
+
+</div>

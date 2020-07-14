@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from agenda.models import Event
 from agenda.forms import EventRegistrationForm, EventForm
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 # Create your views here.
@@ -15,13 +16,16 @@ def event(request, event_id):
         form = EventRegistrationForm(request.POST)
 
         if form.is_valid():
-            registration = form.save()
+            registration = form.save(commit=False)
 
-            event.registers.add(registration)
-            event.save()
+            registration.event = event
+
+            registration.save()
+
             return HttpResponseRedirect('/event/thanks')
+    else :
+        form = EventRegistrationForm()
 
-    form = EventRegistrationForm()
     return TemplateResponse(request, 'agenda/event.html', {"event": event, "form": form})
 
 
@@ -34,5 +38,12 @@ def thanks(request):
 
 
 def new_event(request):
-    form = EventForm()
-    return TemplateResponse(request, 'agenda/new.html', {"form":form})
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+
+        if form.is_valid():
+            event = form.save()
+            return HttpResponseRedirect(reverse('event-register', kwargs={"event_id": event.id}))
+    else:
+        form = EventForm()
+    return TemplateResponse(request, 'agenda/new.html', {"form": form})

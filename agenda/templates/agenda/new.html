@@ -1,14 +1,18 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'agenda/event.css' %}">
-<link href="{% static 'agenda/the-datepicker.css' %}" rel="stylesheet" />
-<script src="{% static 'agenda/the-datepicker.js' %}"></script>
-<script src="{% static 'agenda/main.js' %}"></script>
-<h1>
-    New Event
-</h1>
-<form>
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Crear Evento">
-</form>
+{% include "agenda/base.html" %}
+<div class="container">
+    <div class="row">
+        <h1>
+            New Event
+        </h1>
+    </div>
+    <div class="container_fluid row">
+        <div class="col-10">
+            {% include "agenda/bootstrapform.html" with form=form post_url_name="new_event" %}
+        </div>
+        {% if form.errors %}
+            <div class="col">
+                {% include "agenda/show_errors.html" with form=form %}
+            </div>
+        {% endif %}
+    </div>
+</div>
