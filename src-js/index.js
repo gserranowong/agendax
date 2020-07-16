@@ -26,9 +26,7 @@ function DayPicker(props) {
 
     return (<>
         {
-            range.range(count).map((number) => <tr key={number.toString()}>
-                <td><DaySchedule id={number} name={`scheduler_input_${props.name}_${number}`}/></td>
-            </tr>)
+            range.range(count).map((number) => <DaySchedule key={number} name={`scheduler_input_${props.name}_${number}`}/>)
         }
         <div className="row">
             <div className="col">
@@ -71,14 +69,28 @@ function CardPicker(props) {
     </div>);
 }
 
-function DateTimePicker(props) {
-    return (<div className="input-group date col" id={props.name} data-target-input="nearest">
-        <input type={props.type} name={props.name} className="form-control datetimepicker-input"
-               data-target={`#${props.name}`}/>
-        <div className="input-group-append" data-target={`#${props.name}`} data-toggle="datetimepicker">
-            <div className="input-group-text"><i className="far fa-calendar-alt"/></div>
-        </div>
-    </div>);
+class DateTimePicker extends React.Component {
+
+    constructor(props) {
+        super(props);
+            this.datepicker = React.createRef();
+    }
+
+    componentDidMount() {
+        $.fn.datetimepicker.Constructor._jQueryHandleThis(this.datepicker.current,{
+            'format': 'HH:mm:ss'
+        },{});
+    }
+
+    render() {
+        return (<div ref={this.datepicker} className="input-group date col" id={this.props.name} data-target-input="nearest">
+            <input type={this.props.type} name={this.props.name} className="form-control datetimepicker-input"
+                   data-target={`#${this.props.name}`}/>
+            <div className="input-group-append" data-target={`#${this.props.name}`} data-toggle="datetimepicker">
+                <div className="input-group-text"><i className="far fa-clock"/></div>
+            </div>
+        </div>);
+    }
 }
 
 function DaySchedule(props) {
@@ -92,7 +104,7 @@ function WeekScheduler(props) {
     return (<div>
         {
             DAYS_OF_WEEK.map((day) => {
-                return (<div id={`card_${day.name}`}>
+                return (<div key={`card_${day.name}`}>
                     <CardPicker name={day.name}/>
                 </div>);
             })
