@@ -240,3 +240,5 @@ node_modules
 
 #purescript
 .spago/
+
+src-js/purescript
