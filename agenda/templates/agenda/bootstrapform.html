@@ -1,5 +1,5 @@
 {% load static %}
-<script src="{% static 'js-gen/event.js' %}"></script>
+<script src="{% static 'js-gen/app.js' %}"></script>
 <form class="col s6 offset-s1" action={% url post_url_name %} method="post">
     {% csrf_token %}
     {% for field in form %}

@@ -23,7 +23,7 @@ def event(request, event_id):
             registration.save()
 
             return HttpResponseRedirect('/event/thanks')
-    else :
+    else:
         form = EventRegistrationForm()
 
     return TemplateResponse(request, 'agenda/event.html', {"event": event, "form": form})

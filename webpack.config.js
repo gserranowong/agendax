@@ -1,15 +1,18 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src-js/index.js',
+    entry: {
+        app: './src-js/scheduler.js'
+    },
     output: {
-	filename: 'event.js',
-	path: path.resolve(__dirname, 'static/js-gen'),
+        filename: '[name].js',
+        path: path.resolve(__dirname, 'static/js-gen'),
     },
     module: {
-	rules: [
-	    { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
-	]
+        rules: [
+            {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
+            {test: /\.css$/i, loader: ['style-loader', 'css-loader']},
+        ]
     },
     mode: "development"
 };

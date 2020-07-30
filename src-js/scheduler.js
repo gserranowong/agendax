@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import range from 'range';
+import Scheduler from './week_scheduler';
 
 const DAYS_OF_WEEK = [{'value': 'L', 'name': 'Lunes'},
     {'value': 'M', 'name': 'Martes'},
@@ -109,6 +110,7 @@ function WeekScheduler(props) {
                 </div>);
             })
         }
+        <Scheduler/>
     </div>);
 }
 

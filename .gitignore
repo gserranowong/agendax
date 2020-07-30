@@ -237,3 +237,6 @@ Thumbs.db
 package-lock.json
 
 node_modules
+
+#purescript
+.spago/
