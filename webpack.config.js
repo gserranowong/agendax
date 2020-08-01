@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: './src-js/scheduler.js'
+        addWeekScheduler: './src-js/addWeekScheduler.js'
     },
     output: {
         filename: '[name].js',

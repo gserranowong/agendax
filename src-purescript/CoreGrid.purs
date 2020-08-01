@@ -1,5 +1,5 @@
 module CoreGrid where
-import Prelude(bind, map, otherwise, pure, (&&), (<=), (>=))
+import Prelude(bind, map, pure, (&&),(||), (<=), (/=), min, max, not)
 import Data.Array((..))
 
 type Position = {
@@ -19,38 +19,48 @@ type Range = {
              }
 
 type Grid = Array CellInfo
+data Status = INACTIVE | ONSELECT | FORCE Boolean
 
 initializeGrid :: Int -> Int -> Grid
-initializeGrid h v = do a <- 1 .. h
+initializeGrid h v = do
+                        a <- 1 .. h
                         b <- 1 .. v
                         pure { is_active: false,
                                is_selected: false,
                                position: {
-                                 v: a,
-                                 h:b
+                                 h: a,
+                                 v: b
                                         }
                              }
 
-next :: Grid -> Range -> Grid
-next g r = map f g
+next :: Status -> Grid -> Range -> Grid
+next s g r = map f g
            where
-             f = nextCell g r
+             f = nextCell s g r
 
 isInRange :: Position -> Range -> Boolean
-isInRange p range = gte_h && lte_h && gte_v && lte_v
+isInRange p range = between_h && between_v
                                where
-                                 lte_h = range.begin.h <= p.h
-                                 lte_v = range.begin.v <= p.v
-                                 gte_h = range.end.h >= p.h
-                                 gte_v = range.end.v >= p.v
+                                  min_h = min range.begin.h range.end.h
+                                  max_h = max range.begin.h range.end.h
+                                  min_v = min range.begin.v range.end.v
+                                  max_v = max range.begin.v range.end.v
+                                  between_h = min_h <= p.h && p.h <= max_h
+                                  between_v= min_v <= p.v && p.v <= max_v
 
-nextCell :: Grid -> Range -> CellInfo -> CellInfo
-nextCell grid range cell = {
+nextCell :: Status -> Grid -> Range -> CellInfo -> CellInfo
+nextCell status grid range cell = {
   is_active : is_active,
   is_selected: is_selected,
   position: cell.position
                      }
                      where
-                       is_selected = isInRange (cell.position) range
-                       is_active | is_selected = true
-                                 | otherwise = false
+                       in_range = isInRange (cell.position) range
+                       is_selected = case status of
+                                        ONSELECT -> in_range
+                                        INACTIVE -> false
+                                        FORCE b -> false
+                       is_active = case status of
+                                        ONSELECT -> cell.is_active
+                                        INACTIVE -> cell.is_active /= cell.is_selected
+                                        FORCE b ->  (in_range && b) || ( (not in_range) && cell.is_active )

@@ -242,3 +242,7 @@ node_modules
 .spago/
 
 src-js/purescript
+
+output/
+
+.psci_modules/

@@ -101,7 +101,7 @@ function DaySchedule(props) {
     </div>);
 }
 
-function WeekScheduler(props) {
+function TextScheduler(props) {
     return (<div>
         {
             DAYS_OF_WEEK.map((day) => {
@@ -113,7 +113,3 @@ function WeekScheduler(props) {
         <Scheduler/>
     </div>);
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    ReactDOM.render(<WeekScheduler/>, document.getElementById('week_scheduler'));
-});
