@@ -4,8 +4,9 @@ import range from 'range';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
-import {DAYS_OF_WEEK, ID_TO_INDEX, INDEX_TO_CALENDAR_LABEL,DAYS_IN_WEEK,DAY_DIVISION} from './constants';
+import {DAYS_OF_WEEK, ID_TO_INDEX, INDEX_TO_CALENDAR_LABEL, DAYS_IN_WEEK, DAY_DIVISION} from './constants';
 import useGrid from "./hooks/gridhook";
+import CoreGrid from "./purescript/CoreGrid";
 
 function SlotInput(props) {
     return <td className={props.className}
@@ -13,11 +14,6 @@ function SlotInput(props) {
                onMouseOver={() => props.grid_manager.extendLocation(props.cell_info)}
                onMouseUp={() => props.grid_manager.setInactive(props.cell_info)}
     >
-        {
-            props.cell_info.is_active && <>
-                <input type="hidden" name={`recurrentslot_set(${props.cell_info.position.h},${props.cell_info.position.v})`}/>
-            </>
-        }
     </td>
 }
 
@@ -34,16 +30,21 @@ function WeekScheduler(props) {
     const days_range = range.range(0, DAYS_IN_WEEK);
     const time_range = range.range(0, DAY_DIVISION);
 
+    const ranges = CoreGrid.getAllInfo(cell_grid_manager.grid.cells);
+
     return (<Table className={props.className} bordered>
         <thead>
         <tr>
             <th>Day of Week</th>
             {
-                DAYS_OF_WEEK.map((day,index) => <th key={day.id} onClick={()=>{
-                    cell_grid_manager.forceRange({begin:{v:index+1,h:1},end:{v:index+1,h:DAY_DIVISION}},true);
+                DAYS_OF_WEEK.map((day, index) => <th key={day.id} onClick={() => {
+                    cell_grid_manager.forceRange({
+                        begin: {v: index, h: 0},
+                        end: {v: index, h: DAY_DIVISION}
+                    }, true);
                 }}>
-                                                                                {day.name}
-                                                                            </th>)
+                    {day.name}
+                </th>)
             }
         </tr>
         </thead>
@@ -51,8 +52,8 @@ function WeekScheduler(props) {
 
         {time_range.map((h) => {
             return (<tr key={h}>
-                <td onClick={()=>{
-                    cell_grid_manager.forceRange({begin:{v:1,h:h+1},end:{v:DAYS_IN_WEEK,h:h+1}},true);
+                <td onClick={() => {
+                    cell_grid_manager.forceRange({begin: {v: 0, h: h}, end: {v: DAYS_IN_WEEK, h: h}}, true);
                 }}>
                     {INDEX_TO_CALENDAR_LABEL[h]}
                 </td>
@@ -71,11 +72,26 @@ function WeekScheduler(props) {
             </tr>);
 
         })}
-
-        <tr>
-
-        </tr>
         </tbody>
+        {
+            ranges.map((range, index) => {
+                let id = `recurrentslot_set-${index}`
+                    return (<div key={index}>
+                                <input id={`id_${id}`} type="hidden" name={`${id}-week_day`}
+                                       value={range.week_day}/>
+                                <input id={`id_${id}`}  type="hidden" name={`${id}-start_time`}
+                                       value={`${range.start.hours}:${range.start.minutes}:00`}/>
+                                <input id={`id_${id}`}  type="hidden" name={`${id}-end_time`}
+                                       value={`${range.end.hours}:${range.end.minutes}:00`}/>
+                            </div>);
+            })
+        }
+        <input type="hidden" name="recurrentslot_set-TOTAL_FORMS" value={`${ranges.length}`} id="id_recurrentslot_set-TOTAL_FORMS"/>
+        <input type="hidden" name="recurrentslot_set-INITIAL_FORMS" value={`0`} id="id_recurrentslot_set-INITIAL_FORMS"/>
+        <input type="hidden" name="recurrentslot_set-MIN_NUM_FORMS" value={`${ranges.length}`} id="id_recurrentslot_set-MIN_NUM_FORMS"/>
+        <input type="hidden" name="recurrentslot_set-MAX_NUM_FORMS" value={`${ranges.length}`}
+               id="id_recurrentslot_set-MAX_NUM_FORMS"/>
+
     </Table>)
 }
 

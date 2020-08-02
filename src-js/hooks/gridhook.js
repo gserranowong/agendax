@@ -32,7 +32,7 @@ export default function useGrid() {
         },
         forceRange: (next_range,b) => {
 
-            const nextGrid = CoreGrid.next(CoreGrid.FORCE.create(b))(grid.cells)(next_range);
+            const nextGrid = CoreGrid.next(CoreGrid.TOGGLE.value)(grid.cells)(next_range);
             setState({...{state: grid.state, cells: nextGrid}, begin: grid.begin, end: grid.end});
         },
         grid: grid
