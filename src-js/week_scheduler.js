@@ -14,7 +14,9 @@ function SlotInput(props) {
                onMouseUp={() => props.grid_manager.setInactive(props.cell_info)}
     >
         {
-            props.cell_info.is_active && <input type="hidden" name={`scheduler(${props.cell_info.position.h},${props.cell_info.position.v})`}/>
+            props.cell_info.is_active && <>
+                <input type="hidden" name={`recurrentslot_set(${props.cell_info.position.h},${props.cell_info.position.v})`}/>
+            </>
         }
     </td>
 }

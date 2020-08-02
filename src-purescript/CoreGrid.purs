@@ -1,6 +1,7 @@
 module CoreGrid where
-import Prelude(bind, map, pure, (&&),(||), (<=), (/=), min, max, not)
-import Data.Array((..))
+
+import Data.Array (elem, fromFoldable, index, length, (..))
+import Prelude (bind, map, pure, (&&), (||), (<=), (/=), (*), (+), div, min, max, not)
 
 type Position = {
   h :: Int,
@@ -17,6 +18,19 @@ type Range = {
   begin :: Position,
   end :: Position
              }
+
+
+type DayTime = {
+    hours :: Int,
+    minutes :: Int
+}
+
+
+type WeekTimeRange = {
+    week_day :: String,
+    start_date :: DayTime,
+    end_date :: DayTime
+}
 
 type Grid = Array CellInfo
 data Status = INACTIVE | ONSELECT | FORCE Boolean
@@ -64,3 +78,16 @@ nextCell status grid range cell = {
                                         ONSELECT -> cell.is_active
                                         INACTIVE -> cell.is_active /= cell.is_selected
                                         FORCE b ->  (in_range && b) || ( (not in_range) && cell.is_active )
+
+
+week_days :: Int
+week_days = 7
+
+getDayInfo :: Grid -> Int -> Int -> Int -> Int -> Array CellInfo
+getDayInfo g di df dds ddv = do
+                       d <- di .. df
+                       i <- dds .. ddv
+                       let element_index = d  + i * week_days
+                       elem <- fromFoldable (index g element_index)
+                       pure elem
+
