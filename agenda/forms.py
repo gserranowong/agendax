@@ -42,6 +42,7 @@ class EventForm(forms.ModelForm):
                 "class": "form-control"
             }),
             'is_recurrent': BootstrapCheckBoxWidget(attrs={
-                "id": "is_recurrent"
+                "id": "is_recurrent",
+                "onclick": "toogleTypeEvent()"
             })
         }

@@ -25,7 +25,7 @@ range.range(0, 48).forEach(index=>{
 
     let hours = Math.floor(index/2);
     let minutes = index%2===1 ? 30 : 0;
-    let ampm = index >= 12 ? "AM" : "PM";
+    let ampm = index >= 12 ? "PM" : "AM";
     INDEX_TO_CALENDAR_LABEL.push(`${hours}:${minutes} ${ampm}`);
 
 })
