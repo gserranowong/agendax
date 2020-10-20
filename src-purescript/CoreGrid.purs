@@ -121,7 +121,7 @@ get_time :: CellInfo -> DayTime
 get_time cell = {
                   hours:  index `div` 2,
                   minutes: (index `mod` 2) * 30
-                } where index = cell.position.h -1
+                } where index = cell.position.h
 
 getNextRange :: Array CellInfo -> Int -> Maybe (Tuple (Array CellInfo) WeekTimeRange)
 getNextRange g day_i = do let
@@ -129,7 +129,7 @@ getNextRange g day_i = do let
                             is_active = \c -> c.is_active
                             l1 = dropWhile is_inactive g
                             l2 = takeWhile is_active l1
-                            remaining = drop (length l1 + length l2) g
+                            remaining = drop (length g - length l1 + length l2) g
                           t1 <- head l2
                           t2 <- last l2
                           day <- index days day_i
