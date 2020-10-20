@@ -16,15 +16,15 @@ main = launchAff_ $ runSpec [consoleReporter] do
     
     describe "Grid Creation Tests" do
         it "1 create 1 1 grid cell" do
-                                    let expectedcell = [{ is_active: false,is_selected: false, position: {h:1,v:1}}]
+                                    let expectedcell = [{ is_active: false,is_selected: false, position: {h:0,v:0}}]
                                     expectedcell `shouldEqual` (initializeGrid 1 1)
     
         it "active 1 cell grid" do
-                                let expectedcell = [{ is_active: false,is_selected: true, position: {h:1,v:1}}]
-                                expectedcell `shouldEqual` ( next ONSELECT (initializeGrid 1 1) {begin : {h:1,v:1},end:{h:1,v:1}} )
+                                let expectedcell = [{ is_active: false,is_selected: true, position: {h:0,v:0}}]
+                                expectedcell `shouldEqual` ( next ONSELECT (initializeGrid 1 1) {begin : {h:0,v:0},end:{h:0,v:0}} )
         it "columns are well laid out" do
-                                let expected_cell = [{ is_active: false,is_selected:false, position:{h:1,v:1}},{ is_active: false,is_selected:false, position:{h:1,v:2}}
-                                                     ,{ is_active: false,is_selected:false, position:{h:2,v:1}},{ is_active: false,is_selected:false, position:{h:2,v:2}}]
+                                let expected_cell = [{ is_active: false,is_selected:false, position:{h:0,v:0}},{ is_active: false,is_selected:false, position:{h:0,v:1}}
+                                                     ,{ is_active: false,is_selected:false, position:{h:1,v:0}},{ is_active: false,is_selected:false, position:{h:1,v:1}}]
                                 expected_cell `shouldEqual` (initializeGrid 2 2)
     
     describe "Range tests" do
