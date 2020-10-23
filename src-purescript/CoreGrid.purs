@@ -2,9 +2,9 @@ module CoreGrid where
 
 import Data.Tuple
 
-import Data.Array (cons, drop, dropWhile, elem, filter, findIndex, fromFoldable, head, index, last, length, take, takeWhile, (..))
+import Data.Array (cons, drop, dropWhile, filter, fromFoldable, head, index, last, length, takeWhile, (..))
 import Data.Maybe (Maybe)
-import Prelude (bind, map, pure, (&&), (||), (<=), (>=), (/=), (*), (+), (-), div, min, max, not, mod, otherwise)
+import Prelude (bind, map, pure, (&&), (||), (<=), (>=), (*), (+), (-), div, min, max, not, mod)
 
 type Position = {
   h :: Int,
