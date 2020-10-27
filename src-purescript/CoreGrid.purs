@@ -117,11 +117,11 @@ getDayInfo g t1 t2 d1 d2 = do
                        elem <- fromFoldable (index g element_index)
                        pure elem
 
-get_time :: CellInfo -> DayTime
-get_time cell = {
+get_time :: Int -> DayTime
+get_time index = {
                   hours:  index `div` 2,
                   minutes: (index `mod` 2) * 30
-                } where index = cell.position.h
+                }
 
 getNextRange :: Array CellInfo -> Int -> Maybe (Tuple (Array CellInfo) WeekTimeRange)
 getNextRange g day_i = do let
@@ -134,8 +134,8 @@ getNextRange g day_i = do let
                           t2 <- last l2
                           day <- index days day_i
                           pure (Tuple remaining {
-                                          start: get_time t1,
-                                          end : get_time t2,
+                                          start: get_time t1.position.h,
+                                          end : get_time (t2.position.h+1),
                                           week_day : day
                                          })
 

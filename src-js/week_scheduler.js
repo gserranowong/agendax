@@ -76,19 +76,22 @@ function WeekScheduler(props) {
         {
             ranges.map((range, index) => {
                 let id = `recurrentslot_set-${index}`
-                    return (<div key={index}>
-                                <input id={`id_${id}`} type="hidden" name={`${id}-week_day`}
-                                       value={range.week_day}/>
-                                <input id={`id_${id}`}  type="hidden" name={`${id}-start_time`}
-                                       value={`${range.start.hours}:${range.start.minutes}:00`}/>
-                                <input id={`id_${id}`}  type="hidden" name={`${id}-end_time`}
-                                       value={`${range.end.hours}:${range.end.minutes}:00`}/>
-                            </div>);
+                return (<div key={index}>
+                    <input id={`id_${id}`} type="hidden" name={`${id}-week_day`}
+                           value={range.week_day} disbaled={props.disabled}/>
+                    <input id={`id_${id}`} type="hidden" name={`${id}-start_time`}
+                           value={`${range.start.hours}:${range.start.minutes}:00`} disbaled={props.disabled}/>
+                    <input id={`id_${id}`} type="hidden" name={`${id}-end_time`}
+                           value={`${range.end.hours}:${range.end.minutes}:00`} disbaled={props.disabled}/>
+                </div>);
             })
         }
-        <input type="hidden" name="recurrentslot_set-TOTAL_FORMS" value={`${ranges.length}`} id="id_recurrentslot_set-TOTAL_FORMS"/>
-        <input type="hidden" name="recurrentslot_set-INITIAL_FORMS" value={`0`} id="id_recurrentslot_set-INITIAL_FORMS"/>
-        <input type="hidden" name="recurrentslot_set-MIN_NUM_FORMS" value={`${ranges.length}`} id="id_recurrentslot_set-MIN_NUM_FORMS"/>
+        <input type="hidden" name="recurrentslot_set-TOTAL_FORMS" value={props.disabled ? 0 : `${ranges.length}`}
+               id="id_recurrentslot_set-TOTAL_FORMS"/>
+        <input type="hidden" name="recurrentslot_set-INITIAL_FORMS" value={`0`}
+               id="id_recurrentslot_set-INITIAL_FORMS"/>
+        <input type="hidden" name="recurrentslot_set-MIN_NUM_FORMS" value={`0`}
+               id="id_recurrentslot_set-MIN_NUM_FORMS"/>
         <input type="hidden" name="recurrentslot_set-MAX_NUM_FORMS" value={`${ranges.length}`}
                id="id_recurrentslot_set-MAX_NUM_FORMS"/>
 

@@ -12,3 +12,7 @@
 .event_content > * {
     width: 100%;
 }
+
+#week_scheduler{
+    display: none;
+}
