@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.template.response import TemplateResponse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from agenda.models import (Event, RecurrentSlot)
 from agenda.forms import EventRegistrationForm, EventForm
@@ -30,8 +31,8 @@ def event(request, event_id):
     return TemplateResponse(request, 'agenda/event.html', {"event": event, "form": form})
 
 
-def index():
-    pass
+def index(request):
+    return HttpResponse("hello")
 
 
 def thanks(request):

@@ -1,5 +1,5 @@
 import {useState} from "react";
-import CoreGrid from "../purescript/CoreGrid";
+import * as CoreGrid from "../purescript/CoreGrid";
 import {DAYS_OF_WEEK, ID_TO_INDEX, INDEX_TO_CALENDAR_LABEL,DAYS_IN_WEEK,DAY_DIVISION} from '../constants';
 
 export default function useGrid() {

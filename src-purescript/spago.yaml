@@ -1,0 +1,13 @@
+package:
+  dependencies:
+  - arrays
+  - console
+  - effect
+  - lists
+  - psci-support
+  - spec
+  - tuples
+  name: grid-core
+workspace:
+  package_set:
+    registry: 41.2.0

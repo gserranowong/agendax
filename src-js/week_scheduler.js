@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import {DAYS_OF_WEEK, ID_TO_INDEX, INDEX_TO_CALENDAR_LABEL, DAYS_IN_WEEK, DAY_DIVISION} from './constants';
 import useGrid from "./hooks/gridhook";
-import CoreGrid from "./purescript/CoreGrid";
+import * as CoreGrid from "./purescript/CoreGrid";
 
 function SlotInput(props) {
     return <td className={props.className}
